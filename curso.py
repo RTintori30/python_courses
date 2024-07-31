@@ -17,20 +17,25 @@ class Relatorio():
         webbrowser.open('cliente.pdf')
     
     def gerar_relatorio(self):
-        self.cliente = canvas.Canvas("cliente.pdf")
-        self.cliente.setFont('Helvetica-Bold', 24)
-        self.cliente.drawString('200', '790', 'Ficha do Cliente')
+        self.cliente = canvas.Canvas("cliente.pdf") # Cria o arquivo PDF
 
         self.codigo_relatorio = self.codigo_entry.get()
         self.nome_relatorio = self.nome_entry.get()
         self.telefone_relatorio = self.telefone_entry.get()
         self.cidade_relatorio = self.cidade_entry.get()
 
+        self.cliente.setFont('Helvetica-Bold', 24) # Tipo e Tamanho da Fonte do Título
+        self.cliente.drawString(200, 790, 'Ficha do Cliente') # Posição e Nome do Título
+
+        self.cliente.setFont('Helvetica-Bold', 12)
+        self.cliente.drawString(50, 700, 'Codigo: ' + self.codigo_relatorio)
+        self.cliente.drawString(50, 680, 'Nome: ' + self.nome_relatorio)
+        self.cliente.drawString(50, 660, 'Telefone: ' + self.telefone_relatorio)
+        self.cliente.drawString(50, 640, 'Cidade: ' + self.cidade_relatorio)
+
         self.cliente.showPage()
         self.cliente.save()
         self.print_cliente()
-
-
 
 class Functions():
     def limpar_tela(self):
@@ -254,7 +259,8 @@ class Application(Functions, Relatorio):
         filemenu.add_command(label='Limpar Cliente', command=self.limpar_tela)
 
         # Criando itens e comandos do segundo menu
-        menubar.add_cascade(label='Sobre', menu=filemenu2)
+        menubar.add_cascade(label='Relatórios', menu=filemenu2)
+        filemenu2.add_command(label='Ficha do Cliente', command=self.gerar_relatorio)
         
 
         
